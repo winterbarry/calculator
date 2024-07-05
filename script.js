@@ -1,37 +1,51 @@
-const add = (a, b) => a + b
+// const add = (a, b) => a + b
 
-const subtract = (a,b) => a - b
+// const subtract = (a,b) => a - b
 
-const multiply = (a,b) => a * b
+// const multiply = (a,b) => a * b
 
-const divide = (a,b) => a / b
+// const divide = (a,b) => a / b
 
-function operate(operator, num1, num2) {
-    let result;
+// function operate(operator, num1, num2) {
+//     let result;
 
-    switch (operator) {
-        case "+":
-            result =  add(num1, num2)
-            break;
-        case "-":
-            result = subtract(num1, num2)
-            break;
-        case "*":
-            result = multiply(num1, num2)
-            break;
-        case "/":
-            result = divide(num1, num2)
-            break;
-    }
+//     switch (operator) {
+//         case "+":
+//             result =  add(num1, num2)
+//             break;
+//         case "-":
+//             result = subtract(num1, num2)
+//             break;
+//         case "*":
+//             result = multiply(num1, num2)
+//             break;
+//         case "/":
+//             result = divide(num1, num2)
+//             break;
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
-let num1 = 10;
-let operator = '/';
-let num2 = 2;
+// let num1 = 10;
+// let operator = '/';
+// let num2 = 2;
 
-let result = operate(operator, num1, num2);
-if (result!== undefined) {
-    console.log(`The result of ${num1} ${operator} ${num2} is ${result}`);
-}
+// let result = operate(operator, num1, num2);
+// if (result!== undefined) {
+//     console.log(`The result of ${num1} ${operator} ${num2} is ${result}`);
+// }
+
+const calcScreen = document.querySelector(".calc-screen");
+
+const numbers = document.querySelectorAll(".number");
+
+const updateScreen = (number) => {
+  calcScreen.value = calcScreen.value === "" ? number : calcScreen.value + number; // value == value attribute
+};
+
+numbers.forEach(number => {
+  number.addEventListener("click", () => {
+    updateScreen(number.textContent);
+  });
+});
