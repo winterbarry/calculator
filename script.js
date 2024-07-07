@@ -1,51 +1,91 @@
-// const add = (a, b) => a + b
+const add = (num1, num2) => num1 + num2;
 
-// const subtract = (a,b) => a - b
+const subtract = (num1, num2) => num1 - num2;
 
-// const multiply = (a,b) => a * b
+const multiply = (num1, num2) => num1 * num2;
 
-// const divide = (a,b) => a / b
+const divide = (num1, num2) => {
+  if (num2 === 0) {
+    return "Cannot divide by 0"
+  } else {
+    return num1 / num2
+  }
+}
 
-// function operate(operator, num1, num2) {
-//     let result;
+function operate(operator, num1, num2) {
+    let result;
 
-//     switch (operator) {
-//         case "+":
-//             result =  add(num1, num2)
-//             break;
-//         case "-":
-//             result = subtract(num1, num2)
-//             break;
-//         case "*":
-//             result = multiply(num1, num2)
-//             break;
-//         case "/":
-//             result = divide(num1, num2)
-//             break;
-//     }
+    switch (operator) {
+        case "+":
+            result =  add(num1, num2)
+            break;
+        case "-":
+            result = subtract(num1, num2)
+            break;
+        case "*":
+            result = multiply(num1, num2)
+            break;
+        case "/":
+            result = divide(num1, num2)
+            break;
+    }
 
-//     return result;
-// }
+    return result;
+}
 
-// let num1 = 10;
-// let operator = '/';
-// let num2 = 2;
+let num1 = "";        
+let operator = "";   
+let num2 = "";        
 
-// let result = operate(operator, num1, num2);
-// if (result!== undefined) {
-//     console.log(`The result of ${num1} ${operator} ${num2} is ${result}`);
-// }
-
-const calcScreen = document.querySelector(".calc-screen");
-
+const calcScreen = document.querySelector(".calc-screen"); 
 const numbers = document.querySelectorAll(".number");
+const opSigns = document.querySelectorAll(".operator");
+const equalTo = document.querySelector(".equal-sign");
 
-const updateScreen = (number) => {
-  calcScreen.value = calcScreen.value === "" ? number : calcScreen.value + number; // value == value attribute
+const updateScreen = (value, type) => {
+
+  if (type === "number") {
+    if (!operator) {
+      num1 += value;
+      calcScreen.value = num1; 
+    }
+    else {
+      num2 += value;
+      calcScreen.value = num1 + " " + operator + " " + num2;
+    }
+  } 
+
+  else if (type === "operator") {
+    if (num1 !== "") {
+      operator = value; 
+      calcScreen.value = num1 + " " + operator + " ";
+    }
+  } 
+
+  else if (type === "equal") {
+    if (num1 !== "" && num2 !== "" && operator !== "") { 
+      const result = operate(operator, parseFloat(num1), parseFloat(num2));
+      calcScreen.value = result;
+    } 
+
+    else {
+      calcScreen.value = "Incomplete input";
+    }
+  }
 };
 
-numbers.forEach(number => {
+numbers.forEach(number => { 
   number.addEventListener("click", () => {
-    updateScreen(number.textContent);
+    updateScreen(number.textContent, "number"); 
   });
+});
+
+opSigns.forEach(opSign => {
+  opSign.addEventListener("click", () => {
+    updateScreen(opSign.textContent, "operator"); 
+  });
+});
+
+equalTo.addEventListener("click", () => {
+  updateScreen(null, "equal"); 
 });
